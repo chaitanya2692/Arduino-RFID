@@ -1,14 +1,9 @@
-//#include <SoftwareSerial1.h>
-
-//SoftwareSerial1 rfid(7, 8);
-//SoftwareSerial1 xbee(10, 9);
-
 //Prototypes
 void check_for_notag(void);
 void halt(void);
 void parse(void);
-void print_Serial(void);
-void read_Serial(void);
+void print_serial(void);
+void read_serial(void);
 void seek(void);
 void set_flag(void);
 
@@ -22,7 +17,7 @@ void setup()
   Serial.begin(9600);
   Serial.println("Start");
 
-  // set the data rate for the Serial ports
+  // set the data rate for the SoftwareSerial ports
   Serial1.begin(19200);
   delay(10);
   halt();
@@ -31,7 +26,7 @@ void setup()
 //MAIN
 void loop()
 {
-  read_Serial();
+  read_serial();
 }
 
 void check_for_notag()
@@ -69,47 +64,38 @@ void parse()
   }
 }
 
-void print_Serial()
+void print_serial()
 {
   if(flag == 1){
-    //print to Serial port
-    Serial.println("Card Details");
+    //print to serial port
     Serial.print(Str1[8], HEX);
     Serial.print(Str1[7], HEX);
     Serial.print(Str1[6], HEX);
     Serial.print(Str1[5], HEX);
     Serial.println();
-    //print to XBee module
-    //xbee.print(Str1[8], HEX);
-    //xbee.print(Str1[7], HEX);
-    //xbee.print(Str1[6], HEX);
-    //xbee.print(Str1[5], HEX);
-    //xbee.println();
     delay(100);
     //check_for_notag();
   }
 }
 
-void read_Serial()
+void read_serial()
 {
   seek();
   delay(10);
   parse();
   set_flag();
-  print_Serial();
+  print_serial();
   delay(100);
 }
 
 void seek()
 {
-  //search for RFID tag
-  Serial.write((uint8_t)255);
-  Serial.write((uint8_t)0);
-  Serial.write((uint8_t)1);
-  Serial.write((uint8_t)130);
-  Serial.write((uint8_t)131);
-  Serial.write('\n');
-//  Serial.println("Finding Card");
+  //search for Serial1 tag
+  Serial1.write((uint8_t)255);
+  Serial1.write((uint8_t)0);
+  Serial1.write((uint8_t)1);
+  Serial1.write((uint8_t)130);
+  Serial1.write((uint8_t)131);
   delay(10);
 }
 
