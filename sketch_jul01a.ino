@@ -1,5 +1,4 @@
 //Prototypes
-void check_for_notag(void);
 void halt(void);
 void parse(void);
 void print_serial(void);
@@ -27,20 +26,6 @@ void setup()
 void loop()
 {
   read_serial();
-}
-
-void check_for_notag()
-{
-  seek();
-  delay(10);
-  parse();
-  set_flag();
-
-  if(flag = 1){
-    seek();
-    delay(10);
-    parse();
-  }
 }
 
 void halt()
@@ -74,7 +59,6 @@ void print_serial()
     Serial.print(Str1[5], HEX);
     Serial.println();
     delay(100);
-    //check_for_notag();
   }
 }
 
